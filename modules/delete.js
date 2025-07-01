@@ -1,29 +1,8 @@
 
 import { readFile } from "node:fs";
+import { SaveStudents, ImportStudents } from "./fileHelpers";
 
 
-function ImportStudents(filePath) {
-    return new Promise((resolve, reject) => {
-        readFile(filePath, "utf-8", (err, data) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(data)
-            }
-
-        });
-
-    });
-
-}
-function SaveStudents(filePath, data) {
-    return new Promise((resolve, reject) => {
-        writeFile(filePath, data, "utf-8", (err) => {
-            if (err) reject(err);
-            else resolve();
-        });
-    });
-}
 export function deleteStudentById(filePath, idToDelete) {
     ImportStudents(filePath)
         .then(data => {
