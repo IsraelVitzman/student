@@ -1,18 +1,31 @@
 
-import { readFile } from "node:fs";
+
 import { SaveStudents, ImportStudents } from "./fileHelpers";
 
 
-export function deleteStudentById(filePath, idToDelete) {
-    ImportStudents(filePath)
-        .then(data => {
-            const students = JSON.parse(data)
-            const updated = students.filter(student => student.id !== idToDelete);
 
+
+
+export function deleteStudent(filePath, studentId) {
+    return new Promise((resolve, reject) => {
+
+        ImportStudents(filePath, (err, students) => {
+
+            if (err) {
+                return reject(err);
+            }
+            const updatedStudents = students.filter(s => s.id !== studentId);
+            SaveStudents(filePath, updatedStudents, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+
+                }
+            });
         });
-    const updated = students.filter(student => student.id !== idToDelete);
-
-    return SaveStudents(filePath, JSON.stringify(updated));
-
+    });
 }
+
 
