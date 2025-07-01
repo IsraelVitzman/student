@@ -15,6 +15,7 @@ export function deleteStudent(filePath, studentId) {
                 return reject(err);
             }
             const updatedStudents = students.filter(s => s.id !== studentId);
+
             SaveStudents(filePath, updatedStudents, (err) => {
                 if (err) {
                     reject(err);
